@@ -17,7 +17,7 @@ function ProfilePhoto({ politician }: ProfilePhotoProps) {
     return (
       <div className="ProfilePhoto">
         <figure className="image is-4by5">
-          <img src='https://via.placeholder.com/250x312' alt='Placeholder - No Politician Selected' className="ProfilePhoto__Image"></img>
+          <img src='https://via.placeholder.com/250x312?text=No+Selection' alt='Placeholder - No Politician Selected' className="ProfilePhoto__Image"></img>
         </figure>
       </div>
     );
