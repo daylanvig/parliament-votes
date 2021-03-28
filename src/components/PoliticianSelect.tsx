@@ -1,5 +1,6 @@
 import React from 'react';
-import Politician from '../models/Politician';
+import Politician from 'models/Politician';
+import Select from 'components/elements/Select';
 
 type PoliticianSelectProps = {
   onChange(selectedPolitician?: Politician): void;
@@ -21,25 +22,19 @@ export default class PoliticianSelect extends React.Component<PoliticianSelectPr
     this.state = {
       selectedValue: undefined
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  private handleChange(selectedPoliticianURL?: string) {
+  private handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const selectedPoliticianURL = e.target.value;
     this.props.onChange(this.props.politicians.find(p => p.getURL() === selectedPoliticianURL));
     this.setState({ selectedValue: selectedPoliticianURL });
   }
 
   render() {
+    const selectItems = this.props.politicians.map(p => ({ value: p.getURL(), label: p.getFullName() }));
     return (
-      <div className="select">
-        <select value={this.state.selectedValue} onChange={e => this.handleChange(e.target.value)}>
-          <option></option>
-          {
-            this.props.politicians.map(politician => {
-              return <option key={politician.getURL()} value={politician.getURL()}>{politician.getFullName()}</option>;
-            })
-          }
-        </select>
-      </div>
+      <Select items={selectItems} onChange={this.handleChange} selectedValue={this.state.selectedValue}></Select>
     );
   }
 }
