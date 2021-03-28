@@ -1,0 +1,9 @@
+.PoliticianCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.PoliticianCard > *:not(:last-child) {
+  margin-bottom: 5px;
+}
