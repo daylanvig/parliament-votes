@@ -24,7 +24,7 @@ type VoteCompareListProps = {
  */
 function VoteCompareList({ ballotVotesA, ballotVotesB }: VoteCompareListProps): JSX.Element {
   const differences = BallotVoteUtils.getVoteDifferences(ballotVotesA, ballotVotesB);
-  const percentageDifference = differences.length === 0 ? 100 : (differences.length / ballotVotesA.length) * 100;
+  const percentageDifference = 100 - (differences.length / ballotVotesA.length) * 100;
 
   const renderVotedTag = (ballotVote: BallotVote) => {
     const voted = ballotVote.getVoted();

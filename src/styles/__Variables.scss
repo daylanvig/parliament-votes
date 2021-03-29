@@ -1,0 +1,21 @@
+@import '../../node_modules/bulma/sass/utilities/initial-variables.sass';
+
+// Party brand colours
+$colour-liberal: #D71A20;
+$colour-ndp: #F58220;
+$colour-conservative: #002356;
+$colour-bloq:#00A7EC;
+
+// Bulma overrides --------
+
+// Scheme --
+$scheme-main: $grey-darker;
+
+// Typography --
+$text: $grey-lighter;
+$text-strong: $grey-lightest;
+// Controls --
+$control-radius: 0; // square controls (buttons, selects
+
+// Tags --
+$tag-radius: 0;

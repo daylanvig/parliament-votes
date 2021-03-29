@@ -23,6 +23,10 @@ export default class ParliamentAPI {
   private static _politicians: ParliamentPolitician[];
   private static _votes: ParliamentVote[];
 
+  /**
+   * Precache data that's used throughout
+   * Future: handle via lazy loading
+   */
   public static async preCacheAsync(): Promise<void> {
     await Promise.all([this.loadAllBillsAsync(), this.loadPoliticiansAsync(), this.loadAllVotesAsync()]);
   }

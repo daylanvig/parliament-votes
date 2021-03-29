@@ -111,8 +111,10 @@ export default class ComparePage extends React.Component<{}, ComparePageState> {
     };
 
     return (
-      <div className='container'>
-        <Title title='Compare Voting Patterns'></Title>
+      <div className='container pt-3'>
+        <header>
+          <Title title='Compare Voting Patterns'></Title>
+        </header>
         <section className='section'>
           <div className='columns is-mobile is-multiline is-centered'>
             {
