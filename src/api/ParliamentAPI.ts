@@ -43,8 +43,11 @@ export default class ParliamentAPI {
    * Iteratively load all pages of data
    * @param initialURL 
    */
-  private static async loadAllPagesAsync<T>(initialURL: string): Promise<T[]> {
-    const cachedItems = localStorage.getItem(initialURL);
+  private static async loadAllPagesAsync<T>(initialURL: string, useCache: boolean): Promise<T[]> {
+    let cachedItems: string | null = null;
+    if (useCache) {
+      cachedItems = localStorage.getItem(initialURL);
+    }
     let allItems: T[];
     if (cachedItems == null) {
       allItems = [];
@@ -54,7 +57,9 @@ export default class ParliamentAPI {
         allItems.push(...items.objects);
         items = await this.loadNextPageAsync(items);
       }
-      localStorage.setItem(initialURL, JSON.stringify(allItems));
+      if (useCache) {
+        localStorage.setItem(initialURL, JSON.stringify(allItems));
+      }
     } else {
       allItems = JSON.parse(cachedItems);
     }
@@ -66,7 +71,7 @@ export default class ParliamentAPI {
    */
   private static async loadAllBillsAsync(): Promise<ParliamentBill[]> {
     if (this._bills == null) {
-      this._bills = await this.loadAllPagesAsync('/bills/?limit=500');
+      this._bills = await this.loadAllPagesAsync('/bills/?limit=500', true);
     }
     return this._bills;
   }
@@ -76,14 +81,14 @@ export default class ParliamentAPI {
  */
   private static async loadAllVotesAsync(): Promise<ParliamentVote[]> {
     if (this._votes == null) {
-      this._votes = await this.loadAllPagesAsync('/votes/?limit=500');
+      this._votes = await this.loadAllPagesAsync('/votes/?limit=500', true);
     }
     return this._votes;
   }
 
   private static async loadAllPoliticiansAsync(): Promise<ParliamentPolitician[]> {
     if (this._politicians == null) {
-      this._politicians = await this.loadAllPagesAsync('/politicians/?limit=500');
+      this._politicians = await this.loadAllPagesAsync('/politicians/?limit=500', true);
     }
     return this._politicians;
   }
@@ -106,13 +111,13 @@ export default class ParliamentAPI {
   }
 
 
-  public static async loadBallotVotesByPoliticianAsync(politician: Politician): Promise<BallotVote[]> {
-    const results = await this._api.get(`/votes/ballots/?politician=${politician.getURL()}`);
-    const ballotVoteData = results.data as ParliamentAPIData<ParliamentBallotVote>;
+  public static async loadBallotVotesByPoliticianAsync(politician: Politician, session?: string): Promise<BallotVote[]> {
+    const results = await this.loadAllPagesAsync<ParliamentBallotVote>(`/votes/ballots/?limit=500&politician=${politician.getURL()}`, false);
+    const ballotVoteData = session == null ? results : results.filter(r => r.vote_url.includes(`/votes/${session}`));
     // these two (votes/bills) are cached in memory
     const votes = await this.loadAllVotesAsync();
     const bills = await this.loadAllBillsAsync();
-    return ballotVoteData.objects.map(bv => {
+    return ballotVoteData.map(bv => {
       const vote = votes.find(v => v.url === bv.vote_url);
       if (vote == null) {
         throw new Error(`Vote not found - ${bv.vote_url}`);
@@ -121,8 +126,8 @@ export default class ParliamentAPI {
     });
   }
 
-  public static async getVoteHistoryAsync(politicianName: string): Promise<BallotVote[]> {
+  public static async getVoteHistoryAsync(politicianName: string, session?: string): Promise<BallotVote[]> {
     const politician = await this.loadPoliticianDataByFullNameAsync(politicianName);
-    return this.loadBallotVotesByPoliticianAsync(politician);
+    return this.loadBallotVotesByPoliticianAsync(politician, session);
   }
 }

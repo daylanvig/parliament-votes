@@ -1,0 +1,48 @@
+@import '../styles/_CommonImports';
+
+.VoteCompareList {
+  max-width: 900px;
+  margin: 0 auto;
+
+  &__Row {
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem 0;
+    border-bottom: 1px solid $grey-lighter;
+  }
+
+  &__VoteDetails,
+  &__BillDetails {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+      text-align: center;
+    }
+  }
+
+  &__VoteDetails {
+    width: 100px;
+
+    .tag {
+      width: 95px;
+    }
+
+    @include from($desktop) {
+      width: 175px;
+
+      .tag {
+        width: 125px;
+      }
+    }
+
+
+  }
+
+  &__BillDetails {
+    flex: 1;
+    padding: 0 2rem;
+    max-width: 600px;
+  }
+}

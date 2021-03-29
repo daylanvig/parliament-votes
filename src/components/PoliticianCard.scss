@@ -1,0 +1,31 @@
+@import '../styles/_CommonImports';
+
+.PoliticianCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+
+
+  width: 125px;
+
+  @include from($tablet) {
+    width: 175px;
+  }
+
+  @include from($desktop) {
+    width: 200px;
+  }
+
+
+  @include from($widescreen) {
+    width: 250px;
+  }
+
+
+  &>* {
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+}

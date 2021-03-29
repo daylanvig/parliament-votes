@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { ChangeEvent, useState } from 'react';
 // FUTURE: Required, colours, etcc
 type SelectProps = {
   onChange(e: React.ChangeEvent<HTMLSelectElement>): any;
@@ -17,16 +16,25 @@ type SelectItem = {
  * @returns 
  */
 function Select({ onChange, items, selectedValue }: SelectProps): JSX.Element {
+  const [currentValue, setCurrentValue] = useState(selectedValue);
+
+  function handleChange(e: ChangeEvent<HTMLSelectElement>) {
+    setCurrentValue(e.target.value);
+    onChange(e);
+  }
+
   return (
-    <div className="select">
-      <select value={selectedValue} onChange={e => onChange(e)}>
-        <option></option>
-        {
-          items.map(item => {
-            return <option key={item.value} value={item.value}>{item.label}</option>;
-          })
-        }
-      </select>
+    <div className='control'>
+      <div className='select'>
+        <select value={currentValue} onChange={handleChange}>
+          <option></option>
+          {
+            items.map(item => {
+              return <option key={item.value} value={item.value}>{item.label}</option>;
+            })
+          }
+        </select>
+      </div>
     </div>
   );
 }

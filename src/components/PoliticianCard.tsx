@@ -1,11 +1,8 @@
 import { Component, Fragment } from 'react';
-import ParliamentAPI from 'api/ParliamentAPI';
 import Politician from 'models/Politician';
-import BallotVote from 'models/BallotVote';
-import VoteList from './VoteList';
 import ProfilePhoto from './ProfilePhoto';
 import PoliticianSelect from './PoliticianSelect';
-import './PoliticianCard.css';
+import './PoliticianCard.scss';
 
 type PoliticianCardProps = {
   politicians: Politician[];
@@ -14,7 +11,6 @@ type PoliticianCardProps = {
 
 type PoliticianCardState = {
   selectedPolitican?: Politician;
-  selectedPoliticianBallotVotes: BallotVote[];
 };
 
 export default class PoliticianCard extends Component<PoliticianCardProps, PoliticianCardState> {
@@ -28,7 +24,6 @@ export default class PoliticianCard extends Component<PoliticianCardProps, Polit
     this.handlePoliticianSelectChanged = this.handlePoliticianSelectChanged.bind(this);
     this.state = {
       selectedPolitican: undefined,
-      selectedPoliticianBallotVotes: []
     };
   }
 
@@ -37,16 +32,9 @@ export default class PoliticianCard extends Component<PoliticianCardProps, Polit
    * @param selectedPolitician 
    */
   async handlePoliticianSelectChanged(selectedPolitician?: Politician) {
-    let ballotVotes: BallotVote[];
-    if (selectedPolitician != null) {
-      ballotVotes = await ParliamentAPI.loadBallotVotesByPoliticianAsync(selectedPolitician);
-    } else {
-      ballotVotes = [];
-    }
     this.props.onPoliticianChanged(selectedPolitician);
     this.setState({
       selectedPolitican: selectedPolitician,
-      selectedPoliticianBallotVotes: ballotVotes
     });
   }
 
@@ -58,16 +46,15 @@ export default class PoliticianCard extends Component<PoliticianCardProps, Polit
     }
 
     return (
-      <div>
+      <div className='w-full mt-2 text-gray-700 grid grid-cols-6 gap-2'>
         <div>
-          <label>Party</label>
-          <span>{politician.getPartyName()}</span>
+          <label className='label'>Party</label>
+          <span className='col-span-4'>{politician.getPartyName()}</span>
         </div>
         <div>
-          <label>Riding</label>
-          <span>{politician.getRiding()}</span>
+          <label className='label'>Riding</label>
+          <span className='col-span-4'>{politician.getRiding()}</span>
         </div>
-        <VoteList ballotVotes={this.state.selectedPoliticianBallotVotes}></VoteList>
       </div>
     );
   }

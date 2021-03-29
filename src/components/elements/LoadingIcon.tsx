@@ -1,9 +1,9 @@
 import React from 'react';
 import './LoadingIcon.scss';
+import { ColourType } from 'components/helpers/Colour';
 
 type LoadingIconProps = {
-  // colour can be any bulma colour https://bulma.io/documentation/helpers/color-helpers/
-  colour?: string;
+  colour?: ColourType;
   size?: string;
 };
 /**

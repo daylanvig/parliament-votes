@@ -1,0 +1,15 @@
+.VoteResult {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  &__BillNumber {
+    margin-bottom: .5rem;
+  }
+
+  &__BillName {
+    margin-bottom: 1rem;
+  }
+}
