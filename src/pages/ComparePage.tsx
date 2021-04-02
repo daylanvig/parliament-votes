@@ -101,7 +101,7 @@ export default class ComparePage extends React.Component<{}, ComparePageState> {
 
       // TODO: Option to show all vs just showing differences
       return (
-        <div className="column is-8-tablet is-12-mobile">
+        <div className="column is-8-desktop is-10-tablet is-12-mobile">
           <VoteCompareList
             ballotVotesA={this.state.selectedPoliticianOneBallotVotes}
             ballotVotesB={this.state.selectedPoliticianTwoBallotVotes}></VoteCompareList>

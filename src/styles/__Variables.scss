@@ -7,15 +7,25 @@ $colour-conservative: #002356;
 $colour-bloq:#00A7EC;
 
 // Bulma overrides --------
+// Colours --
+$grey-darker: #394648;
+$white: #F8F1FF;
 
+$success:#CCFF66;
+$link: $grey-lightest;
+$danger: #DB4C40;
 // Scheme --
 $scheme-main: $grey-darker;
 
 // Typography --
 $text: $grey-lighter;
-$text-strong: $grey-lightest;
+$text-strong: rgba($grey-lightest, .9);
+$family-primary: 'Merriweather',
+serif;
+$link-hover: #0BC9CD;
+$link-hover-border: #0BC9CD;
 // Controls --
 $control-radius: 0; // square controls (buttons, selects
-
+$input-radius: 0;
 // Tags --
 $tag-radius: 0;

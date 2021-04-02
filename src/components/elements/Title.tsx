@@ -10,7 +10,7 @@ type TitleProps = {
  * @returns 
  */
 function Title({ title }: TitleProps): JSX.Element {
-  return <h1 className='title'>{title}</h1>;
+  return <h1 className='Title title'>{title}</h1>;
 }
 
 export default Title;
